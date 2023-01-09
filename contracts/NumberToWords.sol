@@ -1,7 +1,8 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/math/SafeMath.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/strings/Strings.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "./Strings.sol";
 
 // This library converts numbers to words in English
 
@@ -47,35 +48,35 @@ library NumberToWords {
             if (i == 9) {
                 // Billion
                 if (digit > 0) {
-                    result = result.add(convertDigit(digit)).add(" billion");
+                    result = string(abi.encodePacked(result, convertDigit(digit), " billion"));
                 }
             } else if (i == 6) {
                 // Million
                 if (digit > 0) {
-                    result = result.add(convertDigit(digit)).add(" million");
+                    result = string(abi.encodePacked(result, convertDigit(digit), " million"));
                 }
             } else if (i == 3) {
                 // Thousand
                 if (digit > 0) {
-                    result = result.add(convertDigit(digit)).add(" thousand");
+                    result = string(abi.encodePacked(result, convertDigit(digit), " thousand"));
                 }
             } else if (i == 2) {
                 // Hundred
                 if (digit > 0) {
-                    result = result.add(convertDigit(digit)).add(" hundred");
+                    result = string(abi.encodePacked(result, convertDigit(digit), " hundred"));
                 }
             } else if (i == 1) {
                 // Ten
                 if (digit > 1) {
-                    result = result.add(convertTens(digit));
+                    result = string(abi.encodePacked(result, convertTens(digit)));
                 } else if (digit == 1) {
-                    result = result.add(convertTeens(digits[0]));
+                    result = string(abi.encodePacked(result, convertTeens(digits[0])));
                     break;
                 }
             } else if (i == 0) {
                 // One
                 if (digit > 0) {
-                    result = result.add(convertDigit(digit));
+                    result = string(abi.encodePacked(result, convertDigit(digit)));
                 }
             }
         }

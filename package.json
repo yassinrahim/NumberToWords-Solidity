@@ -23,7 +23,9 @@
 		"solidity-coverage": "^0.7.18"
 	},
 	"dependencies": {
+		"@openzeppelin/contracts": "^4.8.0",
 		"dotenv": "^14.2.0",
-		"solhint": "^3.3.7"
+		"solhint": "^3.3.7",
+		"solidity-util": "github:willitscale/solidity-util"
 	}
 }
