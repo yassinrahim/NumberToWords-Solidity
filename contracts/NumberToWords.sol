@@ -24,7 +24,6 @@ library NumberToWords {
 
     // Converts a number to its word representation
     function toWords(uint256 _number) public view returns (string memory) {
-        console.log("testing 12323131231");
         if (_number > 10 ** MAX_DIGITS) {
             // Return an empty string if the number is too large
             return "";
@@ -52,34 +51,42 @@ library NumberToWords {
             if (i == 9) {
                 // Billion
                 if (digit > 0) {
-                    result = string(abi.encodePacked(result, convertDigit(digit), " billion"));
+                    result = result.concat(convertDigit(digit)).concat(" billion");
                 }
             } else if (i == 6) {
                 // Million
                 if (digit > 0) {
-                    result = string(abi.encodePacked(result, convertDigit(digit), " million"));
+                    result = result.concat(convertDigit(digit)).concat(" million");
                 }
             } else if (i == 3) {
                 // Thousand
                 if (digit > 0) {
-                    result = string(abi.encodePacked(result, convertDigit(digit), " thousand"));
+                    result = result.concat(convertDigit(digit)).concat(" thousand");
                 }
             } else if (i == 2) {
                 // Hundred
                 if (digit > 0) {
-                    result = string(abi.encodePacked(result, convertDigit(digit), " hundred"));
+                    result = result.concat(convertDigit(digit)).concat(" hundred");
                 }
             } else if (i == 1) {
                 // Ten
                 if (digit > 1) {
-                    result = string(abi.encodePacked(result, convertTens(digit)));
+                    result = result.concat(convertTens(digit));
                 } else if (digit == 1) {
-                    result = string(abi.encodePacked(result, convertTeens(digits[0])));
+                    uint firstDigit = digits[0];
+                    if (firstDigit == 0) {
+                        result = result.concat(convertTens(digit));
+                    } else {
+                        result = result.concat(convertTeens(digits[0]));
+                    }
                     break;
                 }
             } else if (i == 0) {
                 // One
                 if (digit > 0) {
+                    if (result.length() != 0) {
+                        result = result.concat(" ");
+                    }
                     result = result.concat(convertDigit(digit));
                 }
             }
