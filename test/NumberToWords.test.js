@@ -90,4 +90,21 @@ describe("NumberToWords", function () {
             })
         }
     })
+
+    describe("General Test", function () {
+        const generalDigits = {
+            134: "one hundred thirty four",
+            4572: "four thousand five hundred seventy two",
+            54572: "fifty four thousand five hundred seventy two",
+            // 79837498237:
+            //     "seventy nine billion eight hundred thirty seven million four hundred ninety eight thousand two hundred thirty seven",
+        }
+
+        for (let index in generalDigits) {
+            it(index.toString(), async function () {
+                let t = await this.NumberToWords.toWords(index)
+                expect(t).to.equal(generalDigits[index])
+            })
+        }
+    })
 })
