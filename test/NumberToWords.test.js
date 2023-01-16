@@ -1,5 +1,6 @@
 const { ethers } = require("hardhat")
 const { expect } = require("chai")
+const { BigNumber } = require("ethers")
 
 describe("NumberToWords", function () {
     before(async function () {
@@ -73,14 +74,14 @@ describe("NumberToWords", function () {
 
     describe("2 Digits", function () {
         const twoDigits = {
-            29: "twenty nine",
-            38: "thirty eight",
-            47: "forty seven",
-            56: "fifty six",
-            65: "sixty five",
-            74: "seventy four",
-            83: "eighty three",
-            92: "ninety two",
+            29: "twenty-nine",
+            38: "thirty-eight",
+            47: "forty-seven",
+            56: "fifty-six",
+            65: "sixty-five",
+            74: "seventy-four",
+            83: "eighty-three",
+            92: "ninety-two",
         }
 
         for (let index in twoDigits) {
@@ -93,11 +94,15 @@ describe("NumberToWords", function () {
 
     describe("General Test", function () {
         const generalDigits = {
-            134: "one hundred thirty four",
-            4572: "four thousand five hundred seventy two",
-            54572: "fifty four thousand five hundred seventy two",
-            // 79837498237:
-            //     "seventy nine billion eight hundred thirty seven million four hundred ninety eight thousand two hundred thirty seven",
+            134: "one hundred thirty-four",
+            4572: "four thousand five hundred seventy-two",
+            54572: "fifty-four thousand five hundred seventy-two",
+            79837498237:
+                "seventy-nine billion eight hundred thirty-seven million four hundred ninety-eight thousand two hundred thirty-seven",
+            5498723456412315:
+                "five quadrillion four hundred ninety-eight trillion seven hundred twenty-three billion four hundred fifty-six million four hundred twelve thousand three hundred fifteen",
+            7329423423476758:
+                "seven quadrillion three hundred twenty-nine trillion four hundred twenty-three billion four hundred twenty-three million four hundred seventy-six thousand seven hundred fifty-eight",
         }
 
         for (let index in generalDigits) {
@@ -106,5 +111,14 @@ describe("NumberToWords", function () {
                 expect(t).to.equal(generalDigits[index])
             })
         }
+    })
+
+    describe("Revert Test", function () {
+        it("Number must not be higher than max", async function () {
+            let bigNum = BigInt(10000000000000000)
+            await expect(this.NumberToWords.toWords(bigNum)).to.be.revertedWith(
+                "Number cannot be higher than 9007199254740992"
+            )
+        })
     })
 })

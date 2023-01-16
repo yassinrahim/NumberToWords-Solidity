@@ -130,24 +130,21 @@ library NumberToWords {
         "zero,ten,twenty,thirty,forty,fifty,sixty,seventy,eighty,ninety";
 
     function toWords(uint number) public view returns (string memory) {
-        string memory words;
+        require(number < MAX, "Number cannot be higher than 9007199254740992");
+        string memory words = "";
         uint num = number;
-        string[] memory emptyArray;
 
-        words = generateWords(num, emptyArray);
+        words = generateWords(num, words);
         return words;
     }
 
-    function generateWords(
-        uint number,
-        string[] memory words
-    ) private view returns (string memory) {
+    function generateWords(uint number, string memory words) private view returns (string memory) {
         uint remainder;
         string memory word;
 
         // We’re done
         if (number == 0) {
-            if (words.length == 0) {
+            if (words.length() == uint(0)) {
                 return "zero";
             } else {
                 // string memory returnVal = "";
@@ -157,61 +154,47 @@ library NumberToWords {
                 //     returnVal = returnVal.concat(tempWord);
                 // }
 
-                return word;
+                return words;
             }
         }
 
         if (number < 20) {
             remainder = 0;
-            console.log("here1");
             word = convertLessThanTwenty(number);
-            console.log("here2");
         } else if (number < ONE_HUNDRED) {
             remainder = number.mod(TEN);
-            word = convertLessThanHundred(number.div(TEN).mul(TEN));
+            word = convertLessThanHundred(number.div(TEN));
 
             // In case of remainder, we need to handle it here to be able to add the “-”
             if (remainder != 0) {
-                word.concat("-").concat(convertLessThanTwenty(remainder));
+                word = word.concat("-").concat(convertLessThanTwenty(remainder));
                 remainder = 0;
             }
         } else if (number < ONE_THOUSAND) {
             remainder = number.mod(ONE_HUNDRED);
-            word = generateWords(number.div(ONE_HUNDRED).mul(ONE_HUNDRED), words).concat(
-                " hundred"
-            );
+            word = generateWords(number.div(ONE_HUNDRED), "").concat(" hundred");
         } else if (number < ONE_MILLION) {
             remainder = number.mod(ONE_THOUSAND);
-            word = generateWords(number.div(ONE_THOUSAND).mul(ONE_THOUSAND), words).concat(
-                " thousand"
-            );
+            word = generateWords(number.div(ONE_THOUSAND), "").concat(" thousand");
         } else if (number < ONE_BILLION) {
             remainder = number.mod(ONE_MILLION);
-            word = generateWords(number.div(ONE_MILLION).mul(ONE_MILLION), words).concat(
-                " million"
-            );
+            word = generateWords(number.div(ONE_MILLION), "").concat(" million");
         } else if (number < ONE_TRILLION) {
             remainder = number.mod(ONE_BILLION);
-            word = generateWords(number.div(ONE_BILLION).mul(ONE_BILLION), words).concat(
-                " billion"
-            );
+            word = generateWords(number.div(ONE_BILLION), "").concat(" billion");
         } else if (number < ONE_QUADRILLION) {
             remainder = number.mod(ONE_TRILLION);
-            word = generateWords(number.div(ONE_TRILLION).mul(ONE_TRILLION), words).concat(
-                " trillion"
-            );
+            word = generateWords(number.div(ONE_TRILLION), "").concat(" trillion");
         } else if (number <= MAX) {
             remainder = number.mod(ONE_QUADRILLION);
-            word = generateWords(number.div(ONE_QUADRILLION).mul(ONE_QUADRILLION), words).concat(
-                " quadrillion"
-            );
+            word = generateWords(number.div(ONE_QUADRILLION), "").concat(" quadrillion");
         }
 
-        console.log("here3");
-        // console.log("words.length", words.length);
-        words.push(word);
-        words[0] = word;
-        console.log("here4");
+        if (words.length() != 0) {
+            words = words.concat(" ");
+        }
+
+        words = words.concat(word);
 
         return generateWords(remainder, words);
     }
