@@ -129,7 +129,7 @@ library NumberToWords {
     string private constant TENTHS_LESS_THAN_HUNDRED =
         "zero,ten,twenty,thirty,forty,fifty,sixty,seventy,eighty,ninety";
 
-    function toWords(uint number) public view returns (string memory) {
+    function toWords(uint number) public pure returns (string memory) {
         require(number < MAX, "Number cannot be higher than 9007199254740992");
         string memory words = "";
         uint num = number;
@@ -138,7 +138,7 @@ library NumberToWords {
         return words;
     }
 
-    function generateWords(uint number, string memory words) private view returns (string memory) {
+    function generateWords(uint number, string memory words) private pure returns (string memory) {
         uint remainder;
         string memory word;
 
@@ -147,13 +147,6 @@ library NumberToWords {
             if (words.length() == uint(0)) {
                 return "zero";
             } else {
-                // string memory returnVal = "";
-                // for (uint i = 0; i < words.length; i++) {
-                //     string memory tempWord = words[i];
-                //     tempWord = tempWord.concat(" ");
-                //     returnVal = returnVal.concat(tempWord);
-                // }
-
                 return words;
             }
         }
