@@ -3,7 +3,7 @@
 This library was made by refractoring the following number-to-words repository:
 https://github.com/marlun78/number-to-words
 
-Contains some util methods for converting numbers into words, ordinal words and ordinal numbers.
+Contains some util methods for converting numbers into words.
 
 ## Install
 `npm install numbertowords-solidity`
