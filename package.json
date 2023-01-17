@@ -1,6 +1,6 @@
 {
 	"name": "numbertowords-solidity",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Utility method to convert numbers into words in english.",
 	"main": "index.js",
 	"scripts": {
