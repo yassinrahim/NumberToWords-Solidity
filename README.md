@@ -13,7 +13,6 @@ Contains some util methods for converting numbers into words, ordinal words and 
 ### API
 #### `toWords(number)`
 Converts an integer into words.
-If number is decimal, the decimals will be removed.
 ```solidity
 import "./NumberToWords.sol";
 
