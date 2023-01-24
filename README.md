@@ -14,7 +14,7 @@ Contains some util methods for converting numbers into words.
 #### `toWords(number)`
 Converts an integer into words.
 ```solidity
-import "./NumberToWords.sol";
+import "numbertowords-solidity/contracts/NumberToWords.sol";
 
 NumberToWords.toWords(13); // => “thirteen”
 

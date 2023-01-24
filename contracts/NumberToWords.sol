@@ -2,13 +2,13 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "./Strings.sol";
+import "./String2.sol";
 
 // This library converts numbers to words in English
 
 library NumberToWords {
     using SafeMath for uint;
-    using Strings for string;
+    using String2 for string;
 
     uint private constant TEN = 10;
     uint private constant ONE_HUNDRED = 100;

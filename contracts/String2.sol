@@ -12,7 +12,7 @@ pragma solidity ^0.8.0;
  *
  * @author James Lockhart <james@n3tw0rk.co.uk>
  */
-library Strings {
+library String2 {
     /**
      * Concat (High gas cost)
      *
