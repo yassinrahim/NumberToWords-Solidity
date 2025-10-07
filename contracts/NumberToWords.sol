@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "./String2.sol";
 
 // This library converts numbers to words in English
 
 library NumberToWords {
-    using SafeMath for uint;
     using String2 for string;
 
     uint private constant TEN = 10;
@@ -52,8 +50,8 @@ library NumberToWords {
             remainder = 0;
             word = convertLessThanTwenty(number);
         } else if (number < ONE_HUNDRED) {
-            remainder = number.mod(TEN);
-            word = convertLessThanHundred(number.div(TEN));
+            remainder = number % TEN;
+            word = convertLessThanHundred(number / TEN);
 
             // In case of remainder, we need to handle it here to be able to add the “-”
             if (remainder != 0) {
@@ -61,23 +59,23 @@ library NumberToWords {
                 remainder = 0;
             }
         } else if (number < ONE_THOUSAND) {
-            remainder = number.mod(ONE_HUNDRED);
-            word = generateWords(number.div(ONE_HUNDRED), "").concat(" hundred");
+            remainder = number % ONE_HUNDRED;
+            word = generateWords(number / ONE_HUNDRED, "").concat(" hundred");
         } else if (number < ONE_MILLION) {
-            remainder = number.mod(ONE_THOUSAND);
-            word = generateWords(number.div(ONE_THOUSAND), "").concat(" thousand");
+            remainder = number % ONE_THOUSAND;
+            word = generateWords(number / ONE_THOUSAND, "").concat(" thousand");
         } else if (number < ONE_BILLION) {
-            remainder = number.mod(ONE_MILLION);
-            word = generateWords(number.div(ONE_MILLION), "").concat(" million");
+            remainder = number % ONE_MILLION;
+            word = generateWords(number / ONE_MILLION, "").concat(" million");
         } else if (number < ONE_TRILLION) {
-            remainder = number.mod(ONE_BILLION);
-            word = generateWords(number.div(ONE_BILLION), "").concat(" billion");
+            remainder = number % ONE_BILLION;
+            word = generateWords(number / ONE_BILLION, "").concat(" billion");
         } else if (number < ONE_QUADRILLION) {
-            remainder = number.mod(ONE_TRILLION);
-            word = generateWords(number.div(ONE_TRILLION), "").concat(" trillion");
+            remainder = number % ONE_TRILLION;
+            word = generateWords(number / ONE_TRILLION, "").concat(" trillion");
         } else if (number <= MAX) {
-            remainder = number.mod(ONE_QUADRILLION);
-            word = generateWords(number.div(ONE_QUADRILLION), "").concat(" quadrillion");
+            remainder = number % ONE_QUADRILLION;
+            word = generateWords(number / ONE_QUADRILLION, "").concat(" quadrillion");
         }
 
         if (words.length() != 0) {
